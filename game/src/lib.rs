@@ -30,7 +30,7 @@ pub fn run() -> Result<Application, JsValue> {
     let mut engine = Engine::new()?;
     let game = Template::new(&mut engine);
 
-    let mut app = Application::new(engine, game);
+    let app = Application::new(engine, game);
 
     Ok(app)
 }

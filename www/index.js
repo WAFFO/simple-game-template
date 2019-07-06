@@ -1,11 +1,11 @@
 (async () => {
     const webGL = await import('./wasm/game.js');
 
-    const Engine = webGL.run();
+    const Game = webGL.run();
 
     const renderLoop = () => {
         fps.render();
-        Engine.tick();
+        Game.tick();
         requestAnimationFrame(renderLoop);
     }
 
@@ -20,13 +20,13 @@
 
     function updateMouse(e) {
         if (e.metaKey)
-            Engine.mouse_click(e.buttons, e.movementX, e.movementY);
+            Game.js_mouse_click(e.buttons, e.movementX, e.movementY);
         else
-            Engine.mouse_move(e.buttons, e.movementX, e.movementY);
+            Game.js_mouse_move(e.screenX, e.screenY, e.movementX, e.movementY);
     }
-    function updateScroll(e) { Engine.mouse_scroll(e.deltaY); }
-    function keyDown(e) { Engine.key_down(e.keyCode); }
-    function keyUp(e) { Engine.key_up(e.keyCode); }
+    function updateScroll(e) { Game.js_mouse_scroll(e.deltaY); }
+    function keyDown(e) { Game.js_key_down(e.keyCode); }
+    function keyUp(e) { Game.js_key_up(e.keyCode); }
 
     requestAnimationFrame(renderLoop);
 })();

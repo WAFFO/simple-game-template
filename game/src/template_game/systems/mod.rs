@@ -18,8 +18,7 @@ impl<'a> System<'a> for Orbit {
         let delta = delta.0;
 
         for (pos, vel) in (&mut pos, &vel).join() {
-            pos.translation += vel.translation * delta;
-            pos.rotation += vel.rotation * delta;
+            ()
         }
     }
 }
