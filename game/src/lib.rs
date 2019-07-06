@@ -9,13 +9,17 @@ use std::panic;
 
 extern crate goblin;
 
-use goblin::Application;
+use goblin::create_app;
 use goblin::Engine;
 use goblin::Game;
 
 pub mod template_game;
 
 use template_game::Template;
+
+
+//make application BB
+create_app!(Template);
 
 // MAIN
 #[wasm_bindgen]
@@ -24,7 +28,7 @@ pub fn run() -> Result<Application, JsValue> {
     panic::set_hook(Box::new(console_error_panic_hook::hook));
 
     let mut engine = Engine::new()?;
-    let game = Box::new(Template::new(&mut engine));
+    let game = Template::new(&mut engine);
 
     let mut app = Application::new(engine, game);
 

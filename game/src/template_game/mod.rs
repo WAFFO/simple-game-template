@@ -1,3 +1,4 @@
+use wasm_bindgen::prelude::*;
 
 use specs::System;
 use specs::RunNow;
@@ -10,27 +11,20 @@ pub(self) mod systems;
 
 use systems::*;
 
-// systems need lifetime...
-// might come bite us in the butt...
-// could try the old way...
-// ew...
-pub struct Template<'a> {
-    systems: Vec<RunNow<'a>>,
+
+#[wasm_bindgen]
+pub struct Template {
 }
 
 impl Template {
     pub fn new(engine: &mut Engine) -> Template {
-        let mut systems : Vec<RunNow> = Vec::new();
-        systems.push(UpdatePosition);
-        systems.push(Orbit);
         Template{
-            systems
         }
     }
 }
 
 impl Game for Template {
-    fn tick(&mut self, &mut core: Engine) {
+    fn tick(&mut self, core: &mut Engine) {
         ()
     }
 }

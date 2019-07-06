@@ -5,12 +5,12 @@ const webpack = require('webpack');
 module.exports = {
     entry: './index.js',
     output: {
-        path: path.resolve(__dirname, '../../www/static'),
+        path: path.resolve(__dirname, 'static'),
         filename: 'index.js',
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: "index.html"
+            template: path.resolve(__dirname, "index.html")
         }),
         // Have this example work in Edge which doesn't ship `TextEncoder` or
         // `TextDecoder` at this time.

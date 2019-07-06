@@ -1,5 +1,5 @@
 (async () => {
-    const webGL = await import('./wasm/client.js');
+    const webGL = await import('./wasm/game.js');
 
     const Engine = webGL.run();
 
