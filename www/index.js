@@ -11,19 +11,16 @@
 
     var canvas = document.getElementById('canvas');
 
-    document.addEventListener('mousedown', updateMouse, false);
-    document.addEventListener('mouseup', updateMouse, false);
-    document.addEventListener('mousemove', updateMouse, false);
+    document.addEventListener('mousedown', mouseDown, false);
+    document.addEventListener('mouseup', mouseUp, false);
+    document.addEventListener('mousemove', mouseMove, false);
     document.addEventListener('wheel', updateScroll, false);
     document.addEventListener('keydown', keyDown, false);
     document.addEventListener('keyup', keyUp, false);
 
-    function updateMouse(e) {
-        if (e.metaKey)
-            Game.js_mouse_click(e.buttons, e.movementX, e.movementY);
-        else
-            Game.js_mouse_move(e.screenX, e.screenY, e.movementX, e.movementY);
-    }
+    function mouseMove(e) { Game.js_mouse_move(e.screenX, e.screenY, e.movementX, e.movementY); }
+    function mouseDown(e) { Game.js_mouse_press(e.button, e.buttons, e.screenX, e.screenY); }
+    function mouseUp(e) { Game.js_mouse_release(e.button, e.buttons, e.screenX, e.screenY); }
     function updateScroll(e) { Game.js_mouse_scroll(e.deltaY); }
     function keyDown(e) { Game.js_key_down(e.keyCode); }
     function keyUp(e) { Game.js_key_up(e.keyCode); }

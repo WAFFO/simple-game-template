@@ -1,6 +1,6 @@
 use wasm_bindgen::prelude::*;
 
-use specs::System;
+use specs::{System, Entity};
 use specs::RunNow;
 
 use goblin::engine::Engine;
@@ -12,16 +12,30 @@ pub(self) mod entities;
 
 use systems::*;
 use goblin::math::Vert3;
+use goblin::engine::input::{Mouse, KeyBoard};
+use goblin::engine::input::EventType::{Move, Scroll};
 
 
 #[wasm_bindgen]
 pub struct Template {
-
+    player: Entity,
 }
 
 impl Template {
-    pub fn new(engine: &mut Engine) -> Template {
-        let mesh_box = engine.load_mesh("debug_color_box");
+    pub fn new(core: &mut Engine) -> Template {
+        // meshes
+        let mesh_box = core.load_mesh("debug_color_box");
+
+        // register custom components
+        // orbit
+
+        // create entities
+        use std::f32::consts::PI;
+        let player = entities::create_player(
+            core,
+            Vert3::new(0.0, 0.0, 0.0),
+            mesh_box,
+        );
 
         let size = 3;
         let l =  size*-1 + 1;
@@ -30,7 +44,7 @@ impl Template {
                 for m in l..size {
                     if i != 0 || k != 0 || m != 0 {
                         entities::create_solid(
-                            engine,
+                            core,
                             mesh_box,
                             Vert3::new(6.0 * i as f32, 6.0 * k as f32, 6.0 * m as f32),
                             1.0,
@@ -41,22 +55,9 @@ impl Template {
             }
         }
 
-        entities::create_light(
-            engine,
-            mesh_box,
-            Vert3::new(0.0, 0.0, 0.0),
-            0.5,
-            Vert3::new( 1.0, 0.0, -0.45 ),
-        );
-
-        use std::f32::consts::PI;
-        entities::create_camera(
-            engine,
-            0.0,
-            PI,
-            Vert3::zero(),
-        );
-        Template {}
+        Template {
+            player,
+        }
     }
 }
 
@@ -64,5 +65,27 @@ impl Game for Template {
     fn tick(&mut self, core: &mut Engine) {
         let mut update_position = UpdatePosition;
         core.run_system(&mut update_position);
+    }
+
+    fn event_mouse_move(&mut self, core: &mut Engine, mouse: Mouse ) {
+        if mouse.left() {
+            let mut update_camera = UpdateCamera { mouse, event: Move };
+            core.run_system(&mut update_camera);
+        }
+    }
+
+    fn event_mouse_scroll(&mut self, core: &mut Engine, scroll: f32, mouse: Mouse ) {
+        let mut update_camera = UpdateCamera { mouse, event: Scroll };
+        core.run_system(&mut update_camera);
+    }
+
+    fn event_key_press(&mut self, core: &mut Engine, key: usize, key_board: KeyBoard) {
+        let mut move_player = MovePlayer { board: key_board };
+        core.run_system(&mut move_player);
+    }
+
+    fn event_key_release(&mut self, core: &mut Engine, key: usize, key_board: KeyBoard) {
+        let mut move_player = MovePlayer { board: key_board };
+        core.run_system(&mut move_player);
     }
 }
