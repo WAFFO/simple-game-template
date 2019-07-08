@@ -81,24 +81,24 @@ impl<'a> System<'a> for MovePlayer {
             let right : Vert3
                 = camera.rotation.cross(&Vert3::new(0.0, 1.0, 0.0)).normalize();
 
-            vel.translation = Vert3::zero();
+            vel.position = Vert3::zero();
 
             if self.board[87] {
-                vel.translation -= forward * 5.0 * sprint;
+                vel.position -= forward * 5.0 * sprint;
             }
             if self.board[83] {
-                vel.translation += forward * 5.0 * sprint;
+                vel.position += forward * 5.0 * sprint;
             }
             if self.board[65] {
-                vel.translation += right * 5.0 * sprint;
+                vel.position += right * 5.0 * sprint;
             }
             if self.board[68] {
-                vel.translation -= right * 5.0 * sprint;
+                vel.position -= right * 5.0 * sprint;
             }
 
-            //vel.translation.normalize();
+            //vel.position.normalize();
 
-            //pos.rotation = vel.translation.normalize();
+            //pos.rotation = vel.position.normalize();
         }
     }
 }

@@ -22,7 +22,7 @@
     function mouseDown(e) { Game.js_mouse_press(e.button, e.buttons, e.screenX, e.screenY); }
     function mouseUp(e) { Game.js_mouse_release(e.button, e.buttons, e.screenX, e.screenY); }
     function updateScroll(e) { Game.js_mouse_scroll(e.deltaY); }
-    function keyDown(e) { Game.js_key_down(e.keyCode); }
+    function keyDown(e) { console.log("x");Game.js_key_down(e.keyCode); }
     function keyUp(e) { Game.js_key_up(e.keyCode); }
 
     requestAnimationFrame(renderLoop);
