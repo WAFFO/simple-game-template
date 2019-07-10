@@ -19,16 +19,12 @@ pub fn create_solid(engine: &mut Engine, mesh: UUID, position: Vert3, scale: f32
 }
 
 pub fn create_player(engine: &mut Engine, position: Vert3, mesh: UUID) -> Entity {
-    let mut camera = Camera {
-        rotation: Vert3::zero(),
-        pitch: 0.0,
-        yaw: PI,
-        pole_arm: 0.1,
-    };
+    let mut camera = Camera::default();
     camera.update();
+
     create_entity!(
         engine,
-        Transform { position: position, rotation: Vert3::default(), scale: Vert3::all(1.0) },
+        Transform { position: position, rotation: Vert3::default(), scale: Vert3::all(0.5) },
         Velocity { position: Vert3::zero(), rotation: Vert3::zero() },
         StaticMesh { mesh_id: mesh },
         Light { color: Vert4::one() },

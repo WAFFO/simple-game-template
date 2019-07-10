@@ -25,6 +25,7 @@ impl Template {
     pub fn new(core: &mut Engine) -> Template {
         // meshes
         let mesh_box = core.load_mesh("debug_color_box");
+        let mesh_d20 = core.load_mesh("debug_d20");
 
         // register custom components
         // orbit
@@ -63,7 +64,9 @@ impl Template {
 
 impl Game for Template {
     fn tick(&mut self, core: &mut Engine) {
+        let mut run_input = RunInput;
         let mut update_position = UpdatePosition;
+        core.run_system(&mut run_input);
         core.run_system(&mut update_position);
     }
 
@@ -79,13 +82,13 @@ impl Game for Template {
         core.run_system(&mut update_camera);
     }
 
-    fn event_key_press(&mut self, core: &mut Engine, key: usize, key_board: KeyBoard) {
-        let mut move_player = MovePlayer { board: key_board };
-        core.run_system(&mut move_player);
-    }
-
-    fn event_key_release(&mut self, core: &mut Engine, key: usize, key_board: KeyBoard) {
-        let mut move_player = MovePlayer { board: key_board };
-        core.run_system(&mut move_player);
-    }
+//    fn event_key_press(&mut self, core: &mut Engine, key: usize, key_board: KeyBoard) {
+//        let mut move_player = MovePlayer { board: key_board };
+//        core.run_system(&mut move_player);
+//    }
+//
+//    fn event_key_release(&mut self, core: &mut Engine, key: usize, key_board: KeyBoard) {
+//        let mut move_player = MovePlayer { board: key_board };
+//        core.run_system(&mut move_player);
+//    }
 }

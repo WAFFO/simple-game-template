@@ -61,21 +61,19 @@ impl<'a> System<'a> for UpdateCamera {
     }
 }
 
-pub struct MovePlayer{
-    pub board: KeyBoard,
-}
+pub struct RunInput;
 
-impl<'a> System<'a> for MovePlayer {
+impl<'a> System<'a> for RunInput {
     type SystemData = (
-        WriteStorage<'a, Transform>,
+        Read<'a, KeyBoard>,
         WriteStorage<'a, Velocity>,
-        WriteStorage<'a, Camera>,
+        ReadStorage<'a, Camera>,
         ReadStorage<'a, PlayerController>
     );
 
-    fn run(&mut self, (mut t_storage, mut v_storage, mut c_storage, pc_storage): Self::SystemData) {
-        let sprint: f32 = if self.board[16] { 2.5 } else { 1.0 };
-        for (pos, vel, camera, _) in (&mut t_storage, &mut v_storage, &mut c_storage, &pc_storage).join() {
+    fn run(&mut self, (board, mut v_storage, c_storage, pc_storage): Self::SystemData) {
+        let sprint: f32 = if board[16] { 2.5 } else { 1.0 };
+        for (vel, camera, _) in (&mut v_storage, &c_storage, &pc_storage).join() {
             let forward : Vert3
                 = camera.rotation.normalize();
             let right : Vert3
@@ -83,16 +81,16 @@ impl<'a> System<'a> for MovePlayer {
 
             vel.position = Vert3::zero();
 
-            if self.board[87] {
+            if board[87] {
                 vel.position -= forward * 5.0 * sprint;
             }
-            if self.board[83] {
+            if board[83] {
                 vel.position += forward * 5.0 * sprint;
             }
-            if self.board[65] {
+            if board[65] {
                 vel.position += right * 5.0 * sprint;
             }
-            if self.board[68] {
+            if board[68] {
                 vel.position -= right * 5.0 * sprint;
             }
 
