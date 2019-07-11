@@ -8,12 +8,14 @@ use goblin::engine::systems::UpdatePosition;
 use goblin::game::Game;
 
 pub(self) mod systems;
+pub(self) mod components;
 pub(self) mod entities;
 
 use systems::*;
 use goblin::math::Vert3;
 use goblin::engine::input::{Mouse, KeyBoard};
 use goblin::engine::input::EventType::{Move, Scroll};
+use crate::template_game::components::Orbit;
 
 
 #[wasm_bindgen]
@@ -28,7 +30,8 @@ impl Template {
         let mesh_d20 = core.load_mesh("debug_d20");
 
         // register custom components
-        // orbit
+        core.register_component::<Orbit>();
+        core.register_commit();
 
         // create entities
         use std::f32::consts::PI;
@@ -56,6 +59,15 @@ impl Template {
             }
         }
 
+        entities::create_moon(
+            core,
+            mesh_d20,
+            Vert3::new(0.0, 0.0, 0.0),
+            Vert3::new(0.0, 0.0, PI/8.0),
+            22.0,
+            0.2,
+        );
+
         Template {
             player,
         }
@@ -66,8 +78,10 @@ impl Game for Template {
     fn tick(&mut self, core: &mut Engine) {
         let mut run_input = RunInput;
         let mut update_position = UpdatePosition;
+        let mut run_orbit = RunOrbit;
         core.run_system(&mut run_input);
         core.run_system(&mut update_position);
+        core.run_system(&mut run_orbit);
     }
 
     fn event_mouse_move(&mut self, core: &mut Engine, mouse: Mouse ) {
@@ -81,14 +95,4 @@ impl Game for Template {
         let mut update_camera = UpdateCamera { mouse, event: Scroll };
         core.run_system(&mut update_camera);
     }
-
-//    fn event_key_press(&mut self, core: &mut Engine, key: usize, key_board: KeyBoard) {
-//        let mut move_player = MovePlayer { board: key_board };
-//        core.run_system(&mut move_player);
-//    }
-//
-//    fn event_key_release(&mut self, core: &mut Engine, key: usize, key_board: KeyBoard) {
-//        let mut move_player = MovePlayer { board: key_board };
-//        core.run_system(&mut move_player);
-//    }
 }

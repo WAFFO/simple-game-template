@@ -7,6 +7,7 @@ use goblin::engine::mesh_manager::UUID;
 use goblin::math::{Vert3, Vert4};
 
 use std::f32::consts::PI;
+use crate::template_game::components::Orbit;
 
 pub fn create_solid(engine: &mut Engine, mesh: UUID, position: Vert3, scale: f32, rotation: Vert3) {
     create_entity!(
@@ -39,5 +40,14 @@ pub fn create_light(engine: &mut Engine, mesh: UUID, position: Vert3, scale: f32
         .with(Velocity { position: Vert3::zero(), rotation })
         .with(StaticMesh { mesh_id: mesh })
         .with(Light { color: Vert4::one() })
+        .build();
+}
+
+pub fn create_moon(engine: &mut Engine, mesh: UUID, center: Vert3, axis: Vert3, radius: f32, speed: f32) {
+    engine.create_entity()
+        .with(Transform { position: center, rotation: Vert3::default(), scale: Vert3::one() })
+        .with(Orbit::new(axis, center, radius, speed))
+        .with(StaticMesh { mesh_id: mesh })
+        .with(Solid)
         .build();
 }

@@ -5,21 +5,36 @@ use specs::{Join, Read, ReadStorage, WriteStorage, System};
 use goblin::engine::components::*;
 use goblin::engine::resources::*;
 use goblin::engine::input::{Mouse, EventType, KeyBoard};
-use goblin::math::Vert3;
+use goblin::math::{Vert3, Vert4};
+use goblin::math::glm;
+
+use crate::template_game::components::Orbit;
 
 // systems
-pub struct Orbit;
+pub struct RunOrbit;
 
-impl<'a> System<'a> for Orbit {
-    type SystemData = (Read<'a, DeltaTime>, WriteStorage<'a, Transform>, ReadStorage<'a, Velocity>);
+impl<'a> System<'a> for RunOrbit {
+    type SystemData = (Read<'a, DeltaTime>, WriteStorage<'a, Transform>, WriteStorage<'a, Orbit>);
 
-    fn run(&mut self, (delta, mut pos, vel): Self::SystemData) {
+    fn run(&mut self, (delta, mut t_storage, mut orb_storage): Self::SystemData) {
 
         // Read implements DeRef
         let delta = delta.0;
 
-        for (pos, vel) in (&mut pos, &vel).join() {
-            ()
+        for (transform, orbit) in (&mut t_storage, &mut orb_storage).join() {
+            orbit.angle += orbit.speed * delta;
+            let matrix =
+                glm::translate(orbit.center)
+                * glm::rotate_x(orbit.axis[0])
+                * glm::rotate_y(orbit.axis[1])
+                * glm::rotate_z(orbit.axis[2]);
+            let vector = Vert4::new(
+                orbit.angle.cos() * orbit.radius,
+                0.0,
+                orbit.angle.sin() * orbit.radius,
+                0.0,
+            );
+            transform.position = (matrix * vector).xyz();
         }
     }
 }
