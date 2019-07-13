@@ -5,8 +5,8 @@ use specs::{Join, Read, ReadStorage, WriteStorage, System};
 use goblin::engine::components::*;
 use goblin::engine::resources::*;
 use goblin::engine::input::{Mouse, EventType, KeyBoard};
-use goblin::math::{Vert3, Vert4};
-use goblin::math::glm;
+use goblin::glm::{Vec3, Vec4};
+use goblin::glm;
 
 use crate::template_game::components::Orbit;
 
@@ -28,7 +28,7 @@ impl<'a> System<'a> for RunOrbit {
                 * glm::rotate_x(orbit.axis[0])
                 * glm::rotate_y(orbit.axis[1])
                 * glm::rotate_z(orbit.axis[2]);
-            let vector = Vert4::new(
+            let vector = Vec4::new(
                 orbit.angle.cos() * orbit.radius,
                 0.0,
                 orbit.angle.sin() * orbit.radius,
@@ -89,12 +89,10 @@ impl<'a> System<'a> for RunInput {
     fn run(&mut self, (board, mut v_storage, c_storage, pc_storage): Self::SystemData) {
         let sprint: f32 = if board[16] { 2.5 } else { 1.0 };
         for (vel, camera, _) in (&mut v_storage, &c_storage, &pc_storage).join() {
-            let forward : Vert3
-                = camera.rotation.normalize();
-            let right : Vert3
-                = camera.rotation.cross(&Vert3::new(0.0, 1.0, 0.0)).normalize();
+            let forward : Vec3 = camera.forward();
+            let right : Vec3 = camera.right();
 
-            vel.position = Vert3::zero();
+            vel.position = Vec3::zero();
 
             if board[87] {
                 vel.position -= forward * 5.0 * sprint;

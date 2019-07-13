@@ -12,7 +12,7 @@ pub(self) mod components;
 pub(self) mod entities;
 
 use systems::*;
-use goblin::math::Vert3;
+use goblin::glm::Vec3;
 use goblin::engine::input::{Mouse, KeyBoard};
 use goblin::engine::input::EventType::{Move, Scroll};
 use crate::template_game::components::Orbit;
@@ -37,7 +37,7 @@ impl Template {
         use std::f32::consts::PI;
         let player = entities::create_player(
             core,
-            Vert3::new(0.0, 0.0, 0.0),
+            Vec3::new(0.0, 0.0, 0.0),
             mesh_box,
         );
 
@@ -50,9 +50,9 @@ impl Template {
                         entities::create_solid(
                             core,
                             mesh_box,
-                            Vert3::new(6.0 * i as f32, 6.0 * k as f32, 6.0 * m as f32),
+                            Vec3::new(6.0 * i as f32, 6.0 * k as f32, 6.0 * m as f32),
                             1.0,
-                            Vert3::new(1.0, 0.0, -0.45)
+                            Vec3::new(1.0, 0.0, -0.45)
                         );
                     }
                 }
@@ -62,8 +62,8 @@ impl Template {
         entities::create_moon(
             core,
             mesh_d20,
-            Vert3::new(0.0, 0.0, 0.0),
-            Vert3::new(0.0, 0.0, PI/8.0),
+            Vec3::new(0.0, 0.0, 0.0),
+            Vec3::new(0.0, 0.0, PI/8.0),
             22.0,
             0.2,
         );
