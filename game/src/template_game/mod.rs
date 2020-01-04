@@ -6,6 +6,7 @@ use specs::RunNow;
 use goblin::engine::Engine;
 use goblin::engine::systems::UpdatePosition;
 use goblin::game::Game;
+use goblin::javascript;
 
 pub(self) mod systems;
 pub(self) mod components;
@@ -25,6 +26,8 @@ pub struct Template {
 
 impl Template {
     pub fn new(core: &mut Engine) -> Template {
+        javascript::log("Creating new Template game...");
+
         // meshes
         let mesh_box = core.load_mesh("debug_color_box");
         let mesh_d20 = core.load_mesh("debug_d20");
