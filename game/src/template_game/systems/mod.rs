@@ -65,7 +65,9 @@ impl<'a> System<'a> for UpdateCamera {
             else if self.event == EventType::Scroll {
                 let s = self.mouse.move_s();
 
-                camera.pole_arm += s/s.abs();
+                if s != 0.0 {
+                    camera.pole_arm += s/s.abs();
+                }
 
                 if camera.pole_arm < 0.1 {
                     camera.pole_arm = 0.1;
