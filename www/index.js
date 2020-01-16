@@ -1,15 +1,13 @@
 (async () => {
     const webGL = await import('./wasm/game.js');
 
-    const Game = webGL.run();
+    const Game = webGL.run('canvas');
 
     const renderLoop = () => {
         fps.render();
         Game.tick();
         requestAnimationFrame(renderLoop);
     }
-
-    var canvas = document.getElementById('canvas');
 
     document.addEventListener('mousedown', mouseDown, false);
     document.addEventListener('mouseup', mouseUp, false);
