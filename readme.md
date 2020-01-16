@@ -8,7 +8,7 @@ Game template will be what other games will be built off of. First we want to ma
 
 Requires [rustup](https://www.rust-lang.org/en-US/install.html) and [npm](https://nodejs.org/en/).
 
-Requires [engine](), make sure this is installed on the directory level as this repo.
+Requires [engine](https://github.com/WAFFO/goblin-engine), make sure this is installed on the directory level as this repo.
 
 IE, your directory should look like this:  
 ```bash
