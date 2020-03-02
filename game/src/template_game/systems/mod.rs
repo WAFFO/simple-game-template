@@ -53,27 +53,16 @@ impl<'a> System<'a> for UpdateCamera {
 
         for camera in (&mut c_storage).join() {
             if self.event == EventType::Move && self.mouse.left() {
-                camera.yaw -= self.mouse.move_x() * delta;
-                camera.pitch += self.mouse.move_y() * delta;
-
-                if camera.pitch > PI / 2.0 - 0.1 {
-                    camera.pitch = PI / 2.0 - 0.1;
-                } else if camera.pitch < -PI / 2.0 + 0.1 {
-                    camera.pitch = -PI / 2.0 + 0.1;
-                }
+                camera.add_yaw(self.mouse.move_x() * delta);
+                camera.add_pitch(self.mouse.move_y() * delta);
             }
             else if self.event == EventType::Scroll {
                 let s = self.mouse.move_s();
 
                 if s != 0.0 {
-                    camera.pole_arm += s/s.abs();
-                }
-
-                if camera.pole_arm < 0.1 {
-                    camera.pole_arm = 0.1;
+                    camera.add_pole_arm(s/s.abs());
                 }
             }
-            camera.update();
         }
     }
 }

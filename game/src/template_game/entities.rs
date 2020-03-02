@@ -6,7 +6,6 @@ use goblin::engine::components::{Transform, Velocity, StaticMesh, Solid, Camera,
 use goblin::engine::mesh_manager::UUID;
 use goblin::glm::{Vec3, Vec4};
 
-use std::f32::consts::PI;
 use crate::template_game::components::Orbit;
 
 pub fn create_solid(engine: &mut Engine, mesh: UUID, position: Vec3, scale: f32, rotation: Vec3) {
