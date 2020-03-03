@@ -15,4 +15,4 @@ console_error_panic_hook = "0.1.6"
 specs = "0.14.0"
 
 [dependencies.goblin]
-path = "../../engine"
+path = "../../goblin-engine"
