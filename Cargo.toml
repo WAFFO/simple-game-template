@@ -5,11 +5,12 @@ members = [
     "game",
 ]
 
+# https://doc.rust-lang.org/cargo/reference/profiles.html
 [profile.release]
-opt-level = 3
-debug = false
-lto = true
-debug-assertions = false
-codegen-units = 1
-incremental = false
-overflow-checks = false
+opt-level = 3               # Highest level of optimization
+debug = false               # No debug output
+debug-assertions = false    # No debug_assert! macro
+lto = true                  # Inline functions when possible
+codegen-units = 1           # No parallel compilation, optimization is crate-wide
+incremental = false         # Don't use previous compilations
+overflow-checks = false     # No integer overflow checking
