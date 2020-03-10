@@ -89,13 +89,13 @@ impl Game for Template {
 
     fn event_mouse_move(&mut self, core: &mut Engine, mouse: Mouse ) {
         if mouse.left() {
-            let mut update_camera = UpdateCamera { mouse, event: Move };
+            let mut update_camera = RunCamera { mouse, event: Move };
             core.run_system(&mut update_camera);
         }
     }
 
     fn event_mouse_scroll(&mut self, core: &mut Engine, scroll: f32, mouse: Mouse ) {
-        let mut update_camera = UpdateCamera { mouse, event: Scroll };
+        let mut update_camera = RunCamera { mouse, event: Scroll };
         core.run_system(&mut update_camera);
     }
 }

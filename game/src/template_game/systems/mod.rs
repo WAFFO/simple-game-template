@@ -11,96 +11,10 @@ use goblin::glm;
 use crate::template_game::components::Orbit;
 
 // systems
-pub struct RunOrbit;
+mod run_orbit;
+mod run_camera;
+mod run_input;
 
-impl<'a> System<'a> for RunOrbit {
-    type SystemData = (Read<'a, DeltaTime>, WriteStorage<'a, Transform>, WriteStorage<'a, Orbit>);
-
-    fn run(&mut self, (delta, mut t_storage, mut orb_storage): Self::SystemData) {
-
-        // Read implements DeRef
-        let delta = delta.0;
-
-        for (transform, orbit) in (&mut t_storage, &mut orb_storage).join() {
-            orbit.angle += orbit.speed * delta;
-            let matrix =
-                glm::translate(orbit.center)
-                * glm::rotate_x(orbit.axis[0])
-                * glm::rotate_y(orbit.axis[1])
-                * glm::rotate_z(orbit.axis[2]);
-            let vector = Vec4::new(
-                orbit.angle.cos() * orbit.radius,
-                0.0,
-                orbit.angle.sin() * orbit.radius,
-                0.0,
-            );
-            transform.position = (matrix * vector).xyz();
-        }
-    }
-}
-
-pub struct UpdateCamera {
-    pub mouse: Mouse,
-    pub event: EventType,
-}
-
-impl<'a> System<'a> for UpdateCamera {
-    type SystemData = (Read<'a, DeltaTime>, WriteStorage<'a, Camera>, ReadStorage<'a, PlayerController>);
-
-    fn run(&mut self, (delta, mut c_storage, pc_storage): Self::SystemData) {
-
-        let delta = delta.0;
-
-        for camera in (&mut c_storage).join() {
-            if self.event == EventType::Move && self.mouse.left() {
-                camera.add_yaw(self.mouse.move_x() * delta);
-                camera.add_pitch(self.mouse.move_y() * delta);
-            }
-            else if self.event == EventType::Scroll {
-                let s = self.mouse.move_s();
-
-                if s != 0.0 {
-                    camera.add_pole_arm(s/s.abs());
-                }
-            }
-        }
-    }
-}
-
-pub struct RunInput;
-
-impl<'a> System<'a> for RunInput {
-    type SystemData = (
-        Read<'a, KeyBoard>,
-        WriteStorage<'a, Velocity>,
-        ReadStorage<'a, Camera>,
-        ReadStorage<'a, PlayerController>
-    );
-
-    fn run(&mut self, (board, mut v_storage, c_storage, pc_storage): Self::SystemData) {
-        let sprint: f32 = if board[16] { 2.5 } else { 1.0 };
-        for (vel, camera, _) in (&mut v_storage, &c_storage, &pc_storage).join() {
-            let forward : Vec3 = camera.forward();
-            let right : Vec3 = camera.right();
-
-            vel.position = Vec3::zero();
-
-            if board[87] {
-                vel.position -= forward * 5.0 * sprint;
-            }
-            if board[83] {
-                vel.position += forward * 5.0 * sprint;
-            }
-            if board[65] {
-                vel.position += right * 5.0 * sprint;
-            }
-            if board[68] {
-                vel.position -= right * 5.0 * sprint;
-            }
-
-            //vel.position.normalize();
-
-            //pos.rotation = vel.position.normalize();
-        }
-    }
-}
+pub use run_orbit::RunOrbit;
+pub use run_camera::RunCamera;
+pub use run_input::RunInput;
