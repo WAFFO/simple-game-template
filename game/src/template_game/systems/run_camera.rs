@@ -3,7 +3,7 @@ use specs::{Join, Read, ReadStorage, WriteStorage, System};
 
 use goblin::engine::components::*;
 use goblin::engine::resources::*;
-use goblin::engine::input::{Mouse, EventType, KeyBoard};
+use goblin::engine::input::{Mouse, EventType};
 
 pub struct RunCamera {
     pub mouse: Mouse,
@@ -13,7 +13,7 @@ pub struct RunCamera {
 impl<'a> System<'a> for RunCamera {
     type SystemData = (Read<'a, DeltaTime>, WriteStorage<'a, Camera>, ReadStorage<'a, PlayerController>);
 
-    fn run(&mut self, (delta, mut c_storage, pc_storage): Self::SystemData) {
+    fn run(&mut self, (delta, mut c_storage, _pc_storage): Self::SystemData) {
 
         let delta = delta.0;
 

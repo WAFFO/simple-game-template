@@ -2,8 +2,7 @@
 use specs::{Join, Read, ReadStorage, WriteStorage, System};
 
 use goblin::engine::components::*;
-use goblin::engine::resources::*;
-use goblin::engine::input::{Mouse, EventType, KeyBoard};
+use goblin::engine::input::{KeyBoard};
 use goblin::glm::Vec3;
 
 pub struct RunInput;

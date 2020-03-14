@@ -1,10 +1,9 @@
 use wasm_bindgen::prelude::*;
 
-use specs::{System, Entity};
-use specs::RunNow;
+use specs::Entity;
 
 use goblin::engine::Engine;
-use goblin::engine::systems::UpdatePosition;
+use goblin::engine::systems::{UpdatePosition, UpdateRotation};
 use goblin::game::Game;
 use goblin::javascript;
 
@@ -13,8 +12,8 @@ pub(self) mod components;
 pub(self) mod entities;
 
 use systems::*;
-use goblin::glm::Vec3;
-use goblin::engine::input::{Mouse, KeyBoard};
+use goblin::glm::{Vec3, Quat};
+use goblin::engine::input::Mouse;
 use goblin::engine::input::EventType::{Move, Scroll};
 use crate::template_game::components::Orbit;
 
@@ -54,8 +53,10 @@ impl Template {
                             core,
                             mesh_box,
                             Vec3::new(6.0 * i as f32, 6.0 * k as f32, 6.0 * m as f32),
+                            Quat::new(1.0, 0.0, 0.0, 0.0),
                             1.0,
-                            Vec3::new(1.0, 0.0, -0.45)
+                            Vec3::new(1.0, 1.0, -0.5).normalize(),
+                            1.0,
                         );
                     }
                 }
@@ -81,9 +82,11 @@ impl Game for Template {
     fn tick(&mut self, core: &mut Engine) {
         let mut run_input = RunInput;
         let mut update_position = UpdatePosition;
+        let mut update_rotation = UpdateRotation;
         let mut run_orbit = RunOrbit;
         core.run_system(&mut run_input);
         core.run_system(&mut update_position);
+        core.run_system(&mut update_rotation);
         core.run_system(&mut run_orbit);
     }
 
