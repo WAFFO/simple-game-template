@@ -36,9 +36,6 @@ impl<'a> System<'a> for RunInput {
                 vel.position -= right * 5.0 * sprint;
             }
 
-            //vel.position.normalize();
-
-            //pos.rotation = vel.position.normalize();
         }
     }
 }

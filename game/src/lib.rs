@@ -18,7 +18,7 @@ pub mod template_game;
 use template_game::Template;
 
 
-//make application BB
+//make application struct here, based on our game: Template
 create_app!(Template);
 
 // MAIN

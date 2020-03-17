@@ -3,7 +3,7 @@ use specs::{Join, Read, WriteStorage, System};
 
 use goblin::engine::components::*;
 use goblin::engine::resources::*;
-use goblin::glm::{Vec4, translate, rotate_x, rotate_y, rotate_z};
+use goblin::glm::{Vec4, translate, rotate, Quat};
 
 use crate::template_game::components::Orbit;
 
@@ -19,18 +19,12 @@ impl<'a> System<'a> for RunOrbit {
 
         for (transform, orbit) in (&mut t_storage, &mut orb_storage).join() {
             orbit.angle += orbit.speed * delta;
-            let matrix =
-                translate(orbit.center)
-                    * rotate_x(orbit.axis[0])
-                    * rotate_y(orbit.axis[1])
-                    * rotate_z(orbit.axis[2]);
-            let vector = Vec4::new(
-                orbit.angle.cos() * orbit.radius,
-                0.0,
-                orbit.angle.sin() * orbit.radius,
-                0.0,
-            );
-            transform.position = (matrix * vector).xyz();
+
+            let orientation = Quat::from_euler_angle(orbit.axis, orbit.angle);
+            let start = orbit.axis.perpendicular();
+
+            transform.position = (orientation * start) * orbit.radius;
+            transform.rotation = orientation;
         }
     }
 }

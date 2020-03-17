@@ -67,8 +67,8 @@ impl Template {
             core,
             mesh_d20,
             Vec3::new(0.0, 0.0, 0.0),
-            Vec3::new(0.0, 0.0, PI/8.0),
-            22.0,
+            Vec3::new( 0.0,1.0, 0.75),
+            23.0,
             0.2,
         );
 

@@ -13,7 +13,7 @@ pub struct Orbit {
 impl Orbit {
     pub fn new(axis_of_rotation: Vec3, center: Vec3, radius: f32, speed: f32) -> Orbit {
         Orbit {
-            axis: axis_of_rotation,
+            axis: axis_of_rotation.normalize(),
             center,
             radius,
             speed,
