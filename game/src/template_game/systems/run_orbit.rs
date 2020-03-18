@@ -23,7 +23,7 @@ impl<'a> System<'a> for RunOrbit {
             let orientation = Quat::from_euler_angle(orbit.axis, orbit.angle);
             let start = orbit.axis.perpendicular();
 
-            transform.position = (orientation * start) * orbit.radius;
+            transform.position = (orientation * start) * orbit.radius + orbit.center;
             transform.rotation = orientation;
         }
     }
