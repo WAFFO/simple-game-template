@@ -13,6 +13,7 @@ js-sys = "0.3.24"
 web-sys = "0.3.24"
 console_error_panic_hook = "0.1.6"
 specs = "0.14.0"
+cgmath = "0.17.0"
 
 [dependencies.goblin]
 path = "../../goblin-engine"

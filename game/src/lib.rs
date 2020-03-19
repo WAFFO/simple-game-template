@@ -3,6 +3,7 @@ extern crate js_sys;
 extern crate web_sys;
 extern crate console_error_panic_hook;
 extern crate specs;
+extern crate cgmath;
 
 use wasm_bindgen::prelude::*;
 use std::panic;

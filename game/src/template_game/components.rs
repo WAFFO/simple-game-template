@@ -1,17 +1,18 @@
-use goblin::glm::Vec3;
+use cgmath::{Vector3, InnerSpace};
 use specs::{Component, VecStorage};
 
-#[derive(Default)]
+use goblin::engine::FS;
+
 pub struct Orbit {
-    pub axis: Vec3,
-    pub center: Vec3,
-    pub radius: f32,
-    pub speed: f32,
-    pub angle: f32,
+    pub axis: Vector3<FS>,
+    pub center: Vector3<FS>,
+    pub radius: FS,
+    pub speed: FS,
+    pub angle: FS,
 }
 
 impl Orbit {
-    pub fn new(axis_of_rotation: Vec3, center: Vec3, radius: f32, speed: f32) -> Orbit {
+    pub fn new(axis_of_rotation: Vector3<FS>, center: Vector3<FS>, radius: f32, speed: f32) -> Orbit {
         Orbit {
             axis: axis_of_rotation.normalize(),
             center,
@@ -24,4 +25,16 @@ impl Orbit {
 
 impl Component for Orbit {
     type Storage = VecStorage<Self>;
+}
+
+impl Default for Orbit {
+    fn default() -> Self {
+        Orbit {
+            axis: Vector3::new(0.0, 1.0, 0.0),
+            center: Vector3::new(0.0, 0.0, 0.0),
+            radius: 0.0,
+            speed: 0.0,
+            angle: 0.0,
+        }
+    }
 }

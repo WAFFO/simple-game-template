@@ -1,9 +1,8 @@
-
+use cgmath::{Quaternion, Rotation3, Vector3, Rad};
 use specs::{Join, Read, WriteStorage, System};
 
 use goblin::engine::components::*;
 use goblin::engine::resources::*;
-use goblin::glm::{Vec4, translate, rotate, Quat};
 
 use crate::template_game::components::Orbit;
 
@@ -20,10 +19,16 @@ impl<'a> System<'a> for RunOrbit {
         for (transform, orbit) in (&mut t_storage, &mut orb_storage).join() {
             orbit.angle += orbit.speed * delta;
 
-            let orientation = Quat::from_euler_angle(orbit.axis, orbit.angle);
-            let start = orbit.axis.perpendicular();
+            let orientation = Quaternion::from_axis_angle(orbit.axis, Rad(orbit.angle));
+            let start =
+                if orbit.axis.z < orbit.axis.x {
+                    Vector3::new(orbit.axis.y, -orbit.axis.x, 0.0)
+                }
+                else {
+                    Vector3::new(0.0, -orbit.axis.z, orbit.axis.y)
+                };
 
-            transform.position = (orientation * start) * orbit.radius + orbit.center;
+            transform.position = (orientation.clone() * start) * orbit.radius + orbit.center;
             transform.rotation = orientation;
         }
     }
