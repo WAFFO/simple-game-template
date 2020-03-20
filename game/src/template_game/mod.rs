@@ -1,9 +1,12 @@
 use wasm_bindgen::prelude::*;
+use glm;
 
 use specs::Entity;
 
 use goblin::engine::Engine;
 use goblin::engine::systems::{UpdatePosition, UpdateRotation};
+use goblin::engine::input::Mouse;
+use goblin::engine::input::EventType::{Move, Scroll};
 use goblin::game::Game;
 use goblin::javascript;
 
@@ -12,10 +15,7 @@ pub(self) mod components;
 pub(self) mod entities;
 
 use systems::*;
-use goblin::glm::{Vec3, Quat};
-use goblin::engine::input::Mouse;
-use goblin::engine::input::EventType::{Move, Scroll};
-use crate::template_game::components::Orbit;
+use components::Orbit;
 
 
 #[wasm_bindgen]
@@ -39,7 +39,7 @@ impl Template {
         use std::f32::consts::PI;
         let player = entities::create_player(
             core,
-            Vec3::new(0.0, 0.0, 0.0),
+            glm::vec3(0.0, 0.0, 0.0),
             mesh_box,
         );
 
@@ -52,10 +52,10 @@ impl Template {
                         entities::create_solid(
                             core,
                             mesh_box,
-                            Vec3::new(6.0 * i as f32, 6.0 * k as f32, 6.0 * m as f32),
-                            Quat::new(1.0, 0.0, 0.0, 0.0),
+                            glm::vec3(6.0 * i as f32, 6.0 * k as f32, 6.0 * m as f32),
+                            glm::quat(1.0, 0.0, 0.0, 0.0),
                             1.0,
-                            Vec3::new(1.0, 1.0, -0.5).normalize(),
+                            glm::vec3(1.0, 1.0, -0.5).normalize(),
                             1.0,
                         );
                     }
@@ -66,8 +66,8 @@ impl Template {
         entities::create_moon(
             core,
             mesh_d20,
-            Vec3::new(0.0, 0.0, 0.0),
-            Vec3::new( 0.0,1.0, 0.75),
+            glm::vec3(0.0, 0.0, 0.0),
+            glm::vec3( 0.0,1.0, 0.75),
             23.0,
             0.2,
         );

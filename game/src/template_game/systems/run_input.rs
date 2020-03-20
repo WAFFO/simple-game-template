@@ -1,9 +1,8 @@
-
+use glm::Vec3;
 use specs::{Join, Read, ReadStorage, WriteStorage, System};
 
 use goblin::engine::components::*;
 use goblin::engine::input::{KeyBoard};
-use goblin::glm::Vec3;
 
 pub struct RunInput;
 
@@ -21,19 +20,19 @@ impl<'a> System<'a> for RunInput {
             let forward : Vec3 = camera.forward();
             let right : Vec3 = camera.right();
 
-            vel.position = Vec3::zero();
+            vel.position = glm::vec3(0.0, 0.0, 0.0);
 
             if board[87] {
-                vel.position -= forward * 5.0 * sprint;
+                vel.position -= &forward * 5.0 * sprint;
             }
             if board[83] {
-                vel.position += forward * 5.0 * sprint;
+                vel.position += &forward * 5.0 * sprint;
             }
             if board[65] {
-                vel.position += right * 5.0 * sprint;
+                vel.position += &right * 5.0 * sprint;
             }
             if board[68] {
-                vel.position -= right * 5.0 * sprint;
+                vel.position -= &right * 5.0 * sprint;
             }
 
         }
