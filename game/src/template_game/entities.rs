@@ -4,11 +4,11 @@ use specs::Entity;
 use specs::world::Builder;
 use goblin::engine::components::{Transform, Velocity, AngularVelocity, StaticMesh, Solid, Camera, Light, PlayerController};
 use goblin::engine::mesh_manager::UUID;
-use goblin::glm::{Vec3, Vec4, Quat, FSize};
+use glm::{Vec3, Vec4, Quat};
 
 use crate::template_game::components::Orbit;
 
-pub fn create_solid(engine: &mut Engine, mesh: UUID, position: Vec3, rotation_start: Quat, scale: f32, rotation_axis: Vec3, rotation_angle: FSize) -> Entity {
+pub fn create_solid(engine: &mut Engine, mesh: UUID, position: Vec3, rotation_start: Quat, scale: f32, rotation_axis: Vec3, rotation_angle: f32) -> Entity {
     engine.create_entity()
         .with(Transform { position, rotation: rotation_start, scale: Vec3::all(scale) })
         .with(Velocity { position: Vec3::zero() })

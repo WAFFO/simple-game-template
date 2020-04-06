@@ -1,5 +1,11 @@
 # Game Template
 
+## BRANCH: homebrew_glm
+
+This branch requires you also download my other project: [homebrew_glm](https://github.com/WAFFO/homebrew-glm/)
+
+Update the Cargo.toml file with the path that best suits you.
+
 ### Purpose
 
 Game template will be what other games will be built off of. First we want to make what we can, and determine what should be part of the game, and what should be part of the template.

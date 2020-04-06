@@ -3,7 +3,7 @@ use specs::{Join, Read, ReadStorage, WriteStorage, System};
 
 use goblin::engine::components::*;
 use goblin::engine::input::{KeyBoard};
-use goblin::glm::Vec3;
+use glm::Vec3;
 
 pub struct RunInput;
 

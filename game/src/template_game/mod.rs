@@ -12,7 +12,7 @@ pub(self) mod components;
 pub(self) mod entities;
 
 use systems::*;
-use goblin::glm::{Vec3, Quat};
+use glm::{Vec3, Quat};
 use goblin::engine::input::Mouse;
 use goblin::engine::input::EventType::{Move, Scroll};
 use crate::template_game::components::Orbit;

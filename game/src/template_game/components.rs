@@ -1,4 +1,4 @@
-use goblin::glm::Vec3;
+use glm::Vec3;
 use specs::{Component, VecStorage};
 
 #[derive(Default)]

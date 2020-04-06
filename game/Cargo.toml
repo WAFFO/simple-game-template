@@ -16,3 +16,6 @@ specs = "0.14.0"
 
 [dependencies.goblin]
 path = "../../goblin-engine"
+
+[dependencies.homebrew-glm]
+path = "../../../homebrew-glm"
