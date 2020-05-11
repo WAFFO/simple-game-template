@@ -16,7 +16,7 @@ impl<'a> System<'a> for RunInput {
     );
 
     fn run(&mut self, (board, mut v_storage, c_storage, pc_storage): Self::SystemData) {
-        let sprint: f32 = if board[16] { 2.5 } else { 1.0 };
+        let sprint: f32 = if board[16] { 5.0 } else { 1.0 };
         for (vel, camera, _) in (&mut v_storage, &c_storage, &pc_storage).join() {
             let forward : Vec3 = camera.forward();
             let right : Vec3 = camera.right();
