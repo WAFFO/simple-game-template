@@ -1,5 +1,4 @@
 use goblin::Engine;
-use goblin::create_entity;
 use specs::Entity;
 use specs::world::Builder;
 use goblin::engine::components::{Transform, Velocity, AngularVelocity, StaticMesh, Solid, Camera, Light, PlayerController};

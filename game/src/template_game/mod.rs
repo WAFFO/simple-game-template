@@ -36,7 +36,6 @@ impl Template {
         core.register_commit();
 
         // create entities
-        use std::f32::consts::PI;
         let player = entities::create_player(
             core,
             Vec3::new(0.0, 0.0, 0.0),

@@ -1,9 +1,8 @@
-
 use specs::{Join, Read, WriteStorage, System};
 
 use goblin::engine::components::*;
 use goblin::engine::resources::*;
-use glm::{Vec4, translate, rotate, Quat};
+use glm::Quat;
 
 use crate::template_game::components::Orbit;
 
