@@ -8,7 +8,7 @@ use wasm_bindgen::prelude::*;
 use std::panic;
 
 extern crate goblin;
-extern crate homebrew_glm as glm;
+extern crate sawd_glm as glm;
 
 use goblin::create_app;
 use goblin::Engine;
